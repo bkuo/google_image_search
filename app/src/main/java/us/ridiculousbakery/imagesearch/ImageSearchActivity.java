@@ -24,6 +24,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import us.ridiculousbakery.imagesearch.settings.SettingsFragment;
+
 
 public class ImageSearchActivity extends ActionBarActivity {
     private GridView gvResults;

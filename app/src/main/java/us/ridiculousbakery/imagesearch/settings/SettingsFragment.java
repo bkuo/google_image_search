@@ -1,4 +1,4 @@
-package us.ridiculousbakery.imagesearch;
+package us.ridiculousbakery.imagesearch.settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import us.ridiculousbakery.imagesearch.R;
+
 public class SettingsFragment extends DialogFragment {
+    private static String[] sizes ={"small", "medium", "large", "extra-large"};
+    private static String[] colors ={"black", "blue", "brown", "grey", "green", "yellow","orange","red", "pink"};
+    private static String[] types = {"faces", "photo", "clip art", "line art"};
 
     private Spinner spImageSize;
     private Spinner spColorFilter;
@@ -38,7 +43,6 @@ public class SettingsFragment extends DialogFragment {
         spImageSize = (Spinner) view.findViewById(R.id.spImageSize);
         spColorFilter = (Spinner) view.findViewById(R.id.spColorFilter);
         spImageType = (Spinner) view.findViewById(R.id.spImageType);
-
 
         return view;
     }
