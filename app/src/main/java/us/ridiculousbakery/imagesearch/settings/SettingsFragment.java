@@ -57,7 +57,10 @@ public class SettingsFragment extends DialogFragment {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                settings._selectedSize = spImageSize.getSelectedItemPosition();
+                settings._selectedColor= spColorFilter.getSelectedItemPosition();
+                settings._selectedType = spImageType.getSelectedItemPosition();
+                settings._selectedSite = etSiteFilter.getText().toString();
                 ((ImageSearchActivity)getActivity()).onFinishSettingsFragment(settings);
                 dismiss();
             }

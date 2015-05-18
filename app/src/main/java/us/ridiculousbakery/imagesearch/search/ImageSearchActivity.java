@@ -77,6 +77,7 @@ public class ImageSearchActivity extends ActionBarActivity {
             public boolean onQueryTextSubmit(String query) {
                 settings.query = query;
                 AsyncHttpClient client = new AsyncHttpClient();
+                Log.d("URL", url());
                 client.get(url(), new_query_response_handler());
                 return true;
             }
@@ -103,19 +104,20 @@ public class ImageSearchActivity extends ActionBarActivity {
     }
 
     public void onFinishSettingsFragment(Settings new_settings) {
+        Log.d("SETTINGS", new_settings.get_selectedColor()+"");
         settings = new_settings;
     }
 
     private String url() {
         String u = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8";
         if (settings.get_selectedSize() > 0) {
-            u = u + "&imgsize=" + settings.get_selectedSize();
+            u = u + "&imgsz=" + getResources().getStringArray(R.array.apisizes)[settings.get_selectedSize()];
         }
         if (settings.get_selectedColor() > 0) {
-            u = u + "&imgColor=" + settings.get_selectedColor();
+            u = u + "&imgcolor=" + getResources().getStringArray(R.array.colors)[settings.get_selectedColor()];
         }
         if (settings.get_selectedType() > 0) {
-            u = u + "&imgtype=" + settings.get_selectedType();
+            u = u + "&imgtype=" + getResources().getStringArray(R.array.apitypes)[settings.get_selectedType()];
         }
         if (settings.get_selectedSite().length() > 0) {
             u = u + "&as_sightsearch=" + settings.get_selectedSite();
