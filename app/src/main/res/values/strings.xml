@@ -4,4 +4,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_image_display">ImageDisplayActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_size">Image Size</string>
+    <string name="color_filter">Color Filter</string>
+    <string name="image_type">Image Type</string>
+    <string name="site_filter">Site Filter</string>
 </resources>

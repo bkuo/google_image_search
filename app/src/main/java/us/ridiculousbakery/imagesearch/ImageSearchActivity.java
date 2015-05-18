@@ -2,6 +2,7 @@ package us.ridiculousbakery.imagesearch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -76,8 +77,10 @@ public class ImageSearchActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==R.id.action_settings){
-//            Intent i= Intent.new(this, );
-//            startActivityForResult(100);
+            FragmentManager fm = getSupportFragmentManager();
+            SettingsFragment frSettings  = SettingsFragment.newInstance("Advanced Filters");
+            frSettings.show(fm, "settings_fragment");
+
         }
 
 
