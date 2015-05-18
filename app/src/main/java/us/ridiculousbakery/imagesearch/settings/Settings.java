@@ -28,10 +28,12 @@ public class Settings implements Serializable{
         return _selectedSite;
     }
 
+
     public Integer _selectedSize;
     public Integer _selectedColor;
     public Integer _selectedType;
     public String _selectedSite;
+    public String query;
     public Settings(){}
     
     public static Settings fromBundle(Bundle b){

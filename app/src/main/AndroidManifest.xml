@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ImageSearchActivity"
+            android:name=".search.ImageSearchActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,12 +19,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ImageDisplayActivity"
+            android:name=".detail.ImageDisplayActivity"
             android:label="@string/title_activity_image_display"
-            android:parentActivityName=".ImageSearchActivity" >
+            android:parentActivityName=".search.ImageSearchActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="us.ridiculousbakery.imagesearch.ImageSearchActivity" />
+                android:value=".search.ImageSearchActivity" />
         </activity>
     </application>
 

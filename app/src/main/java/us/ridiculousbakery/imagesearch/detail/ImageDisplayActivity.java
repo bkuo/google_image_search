@@ -1,7 +1,9 @@
-package us.ridiculousbakery.imagesearch;
+package us.ridiculousbakery.imagesearch.detail;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import us.ridiculousbakery.imagesearch.ImageResult;
+import us.ridiculousbakery.imagesearch.R;
 
 
 public class ImageDisplayActivity extends ActionBarActivity {
@@ -33,6 +38,12 @@ public class ImageDisplayActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_image_display, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        // Fetch reference to the share action provider
+        ShareActionProvider miShareAction = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
         return true;
     }
 

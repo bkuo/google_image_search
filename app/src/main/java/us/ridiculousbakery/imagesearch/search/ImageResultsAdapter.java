@@ -1,4 +1,4 @@
-package us.ridiculousbakery.imagesearch;
+package us.ridiculousbakery.imagesearch.search;
 
 import android.content.Context;
 import android.text.Html;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import us.ridiculousbakery.imagesearch.ImageResult;
+import us.ridiculousbakery.imagesearch.R;
 
 /**
  * Created by bkuo on 5/12/15.

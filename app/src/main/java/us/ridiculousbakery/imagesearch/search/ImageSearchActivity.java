@@ -1,4 +1,4 @@
-package us.ridiculousbakery.imagesearch;
+package us.ridiculousbakery.imagesearch.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,15 +24,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import us.ridiculousbakery.imagesearch.util.EndlessScrollListener;
+import us.ridiculousbakery.imagesearch.detail.ImageDisplayActivity;
+import us.ridiculousbakery.imagesearch.ImageResult;
+import us.ridiculousbakery.imagesearch.R;
 import us.ridiculousbakery.imagesearch.settings.Settings;
 import us.ridiculousbakery.imagesearch.settings.SettingsFragment;
 
 
-public class ImageSearchActivity extends ActionBarActivity  {
+public class ImageSearchActivity extends ActionBarActivity {
     private GridView gvResults;
     private ArrayList<ImageResult> results;
-    private ImageResultsAdapter  aImageResults;
+    private ImageResultsAdapter aImageResults;
     private Settings settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +50,15 @@ public class ImageSearchActivity extends ActionBarActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(ImageSearchActivity.this, ImageDisplayActivity.class);
-                i.putExtra("data", (ImageResult)parent.getItemAtPosition(position));
+                i.putExtra("data", (ImageResult) parent.getItemAtPosition(position));
                 startActivity(i);
+            }
+        });
+
+        gvResults.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                nextPage(page);
             }
         });
         gvResults.setAdapter(aImageResults);
@@ -63,9 +75,9 @@ public class ImageSearchActivity extends ActionBarActivity  {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                settings.query = query;
                 AsyncHttpClient client = new AsyncHttpClient();
-                String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&imgsz=large&q=" + query;
-                client.get(url, api_response_handler());
+                client.get(url(), new_query_response_handler());
                 return true;
             }
 
@@ -81,29 +93,51 @@ public class ImageSearchActivity extends ActionBarActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if(id==R.id.action_settings){
+        if (id == R.id.action_settings) {
             FragmentManager fm = getSupportFragmentManager();
-            SettingsFragment frSettings  = SettingsFragment.newInstance(settings);
+            SettingsFragment frSettings = SettingsFragment.newInstance(settings);
             frSettings.show(fm, "settings_fragment");
         }
 
         return super.onOptionsItemSelected(item);
     }
-    public void onFinishSettingsFragment(Settings new_settings){
+
+    public void onFinishSettingsFragment(Settings new_settings) {
         settings = new_settings;
     }
 
-    private JsonHttpResponseHandler api_response_handler(){
-        return new JsonHttpResponseHandler(){
+    private String url() {
+        String u = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8";
+        if (settings.get_selectedSize() > 0) {
+            u = u + "&imgsize=" + settings.get_selectedSize();
+        }
+        if (settings.get_selectedColor() > 0) {
+            u = u + "&imgColor=" + settings.get_selectedColor();
+        }
+        if (settings.get_selectedType() > 0) {
+            u = u + "&imgtype=" + settings.get_selectedType();
+        }
+        if (settings.get_selectedSite().length() > 0) {
+            u = u + "&as_sightsearch=" + settings.get_selectedSite();
+        }
+        if(settings.query != null){
+            u=u+ "&q=" + settings.query;
+        }
+
+        return u;
+    }
+
+    private JsonHttpResponseHandler new_query_response_handler() {
+        return new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("DEBUG", response.toString());
                 JSONArray imageResultsjson = null;
-                try{
-                    imageResultsjson  = response.getJSONObject("responseData").getJSONArray("results");
+                try {
+                    imageResultsjson = response.getJSONObject("responseData").getJSONArray("results");
                     aImageResults.clear();
                     aImageResults.addAll(ImageResult.fromJSONArray(imageResultsjson));
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 aImageResults.notifyDataSetChanged();
@@ -117,4 +151,35 @@ public class ImageSearchActivity extends ActionBarActivity  {
         };
 
     }
+    public void nextPage(int offset){
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url()+8*offset, next_response_handler());
+
+    }
+    private JsonHttpResponseHandler next_response_handler() {
+        return new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("DEBUG", response.toString());
+                JSONArray imageResultsjson = null;
+                try {
+                    imageResultsjson = response.getJSONObject("responseData").getJSONArray("results");
+
+                    aImageResults.addAll(ImageResult.fromJSONArray(imageResultsjson));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                aImageResults.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "query failed", Toast.LENGTH_SHORT);
+            }
+        };
+
+    }
+
+
 }
