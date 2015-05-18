@@ -1,4 +1,6 @@
 package us.ridiculousbakery.imagesearch;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -6,6 +8,8 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -31,6 +35,14 @@ public class ImageSearchActivity extends ActionBarActivity {
         gvResults = (GridView) findViewById(R.id.gvResults);
         results = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, results);
+        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(ImageSearchActivity.this, ImageDisplayActivity.class);
+                i.putExtra("data", (ImageResult)parent.getItemAtPosition(position));
+                startActivity(i);
+            }
+        });
         gvResults.setAdapter(aImageResults);
     }
 
