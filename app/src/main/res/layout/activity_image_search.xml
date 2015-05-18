@@ -3,36 +3,16 @@
     android:layout_height="match_parent"
     tools:context=".ImageSearchActivity">
 
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etQuery"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/btnSearch"
-        android:layout_toStartOf="@+id/btnSearch"
-        android:singleLine="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/btnSearch"
-        android:layout_alignBottom="@+id/etQuery"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onImageSearch" />
-
     <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gvResults"
-        android:layout_below="@+id/etQuery"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:numColumns="3"
         android:nestedScrollingEnabled="false" />
 </RelativeLayout>

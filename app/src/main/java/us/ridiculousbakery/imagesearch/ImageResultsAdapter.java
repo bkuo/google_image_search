@@ -37,7 +37,7 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
             viewholder = (ViewHolder) convertView.getTag();
         }
         viewholder.ivResult.setImageResource(0);
-        Picasso.with(getContext()).load(imageResult.fullUrl).resize(300,300).centerCrop().into(viewholder.ivResult);
+        Picasso.with(getContext()).load(imageResult.fullUrl).fit().centerCrop().into(viewholder.ivResult);
         viewholder.tvResult.setText(Html.fromHtml(imageResult.title));
         return convertView;
     }
