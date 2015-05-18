@@ -24,17 +24,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import us.ridiculousbakery.imagesearch.settings.Settings;
 import us.ridiculousbakery.imagesearch.settings.SettingsFragment;
 
 
-public class ImageSearchActivity extends ActionBarActivity {
+public class ImageSearchActivity extends ActionBarActivity  {
     private GridView gvResults;
     private ArrayList<ImageResult> results;
     private ImageResultsAdapter  aImageResults;
+    private Settings settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_search);
+        settings = new Settings();
         gvResults = (GridView) findViewById(R.id.gvResults);
         results = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, results);
@@ -47,6 +50,8 @@ public class ImageSearchActivity extends ActionBarActivity {
             }
         });
         gvResults.setAdapter(aImageResults);
+
+
     }
 
     @Override
@@ -74,26 +79,20 @@ public class ImageSearchActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if(id==R.id.action_settings){
             FragmentManager fm = getSupportFragmentManager();
-            SettingsFragment frSettings  = SettingsFragment.newInstance("Advanced Filters");
+            SettingsFragment frSettings  = SettingsFragment.newInstance(settings);
             frSettings.show(fm, "settings_fragment");
-
         }
-
 
         return super.onOptionsItemSelected(item);
     }
+    public void onFinishSettingsFragment(Settings new_settings){
+        settings = new_settings;
+    }
 
-//    public void onImageSearch(query){
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&imgsz=large&q=" + query;
-//        client.get(url, api_response_handler());
-//    }
     private JsonHttpResponseHandler api_response_handler(){
         return new JsonHttpResponseHandler(){
             @Override

@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context="us.ridiculousbakery.imagesearch.settings.SettingsFragment">
 
 
@@ -14,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        />
+        android:width="120dp" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -23,7 +24,8 @@
         android:layout_alignTop="@+id/tvImageSize"
         android:layout_toRightOf="@+id/tvImageSize"
         android:layout_alignBottom="@id/tvImageSize"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:entries="@array/sizes" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,10 +90,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etSiteFilter"
-        android:layout_alignTop="@+id/tvSiteFilter"
         android:layout_toRightOf="@+id/tvSiteFilter"
-        android:layout_alignBottom="@+id/tvSiteFilter"
         android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvSiteFilter" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:id="@+id/btn_OK"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/tvSiteFilter"
+        android:layout_centerHorizontal="true"
         />
 
 

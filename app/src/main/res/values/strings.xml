@@ -11,6 +11,7 @@
     <string name="color_filter">Color Filter</string>
     <string name="image_type">Image Type</string>
     <string name="site_filter">Site Filter</string>
+    <string name="ok">ok</string>
 
 
 </resources>
